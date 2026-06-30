@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台灣廟會臉譜大全</title>
+<style>
+  :root {
+    --red: #c0392b; --gold: #c9a227; --dark: #1a1a2e;
+    --card-bg: #fdf6e3; --accent: #16213e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Serif TC','Microsoft JhengHei',serif; background:#1a1a2e; color:#333; }
+
+  /* ── 頂部橫幅 ── */
+  header {
+    background: linear-gradient(135deg,#6b0000 0%,#c0392b 50%,#6b0000 100%);
+    border-bottom: 4px solid #c9a227;
+    text-align:center; padding:2rem 1rem; position:relative;
+  }
+  header::before, header::after { content:'✦ ✦ ✦'; display:block; color:#c9a227; font-size:1rem; letter-spacing:1rem; }
+  header h1 { color:#ffd700; font-size:clamp(1.8rem,5vw,3rem); text-shadow:2px 2px 8px rgba(0,0,0,.6); letter-spacing:.3rem; margin:.4rem 0 .2rem; }
+  header p { color:#ffecb3; font-size:.9rem; letter-spacing:.1rem; }
+
+  /* ── Nav Tabs ── */
+  .tabs {
+    display:flex; flex-wrap:wrap; gap:.4rem; padding:1rem 1.5rem;
+    background:#16213e; border-bottom:2px solid #c9a227;
+    justify-content:center; position:sticky; top:0; z-index:100;
+  }
+  .tab-btn {
+    background:transparent; color:#c9a227; border:1px solid #c9a227;
+    padding:.35rem .9rem; border-radius:20px; cursor:pointer;
+    font-size:.85rem; font-family:inherit; transition:all .2s;
+  }
+  .tab-btn:hover,.tab-btn.active { background:#c9a227; color:#1a1a2e; font-weight:bold; }
+
+  /* ── Main ── */
+  main { max-width:1200px; margin:0 auto; padding:2rem 1rem; }
+
+  /* ── 真實照片 gallery ── */
+  .photo-gallery {
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:.8rem;
+    margin-bottom:2.5rem;
+  }
+  .photo-gallery figure { position:relative; border-radius:10px; overflow:hidden; background:#111; }
+  .photo-gallery img { width:100%; height:160px; object-fit:cover; display:block; transition:transform .3s; }
+  .photo-gallery figure:hover img { transform:scale(1.05); }
+  .photo-gallery figcaption {
+    position:absolute; bottom:0; left:0; right:0;
+    background:rgba(0,0,0,.65); color:#ffd700; font-size:.72rem;
+    padding:.3rem .5rem; text-align:center;
+  }
+  .gallery-title {
+    color:#ffd700; font-size:1.1rem; border-left:4px solid #c9a227;
+    padding-left:.7rem; margin-bottom:1rem; letter-spacing:.15rem;
+  }
+
+  /* ── 分類區塊 ── */
+  .category-section { margin-bottom:3rem; }
+  .category-title {
+    color:#ffd700; font-size:1.3rem; border-left:5px solid #c9a227;
+    padding-left:.8rem; margin-bottom:.6rem; letter-spacing:.2rem;
+  }
+  .category-desc { color:#aaa; font-size:.85rem; margin-bottom:1.2rem; padding-left:1rem; border-left:2px solid #444; line-height:1.6; }
+
+  /* ── 臉譜卡片 ── */
+  .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.2rem; }
+  .card { background:#fdf6e3; border-radius:12px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,.4); transition:transform .2s,box-shadow .2s; }
+  .card:hover { transform:translateY(-4px); box-shadow:0 8px 25px rgba(201,162,39,.3); }
+
+  /* 卡片頭（色塊或真實圖） */
+  .card-face { height:90px; display:flex; align-items:center; justify-content:center; position:relative; font-size:2.2rem; }
+  .card-face .face-label { position:absolute; bottom:4px; right:8px; font-size:.62rem; color:rgba(255,255,255,.75); font-style:italic; }
+  .card-photo { width:100%; height:200px; object-fit:cover; object-position:center 20%; display:block; }
+
+  /* 卡片內容 */
+  .card-body { padding:.9rem; }
+  .card-name { font-size:1.15rem; font-weight:bold; color:#8B0000; margin-bottom:.15rem; letter-spacing:.05rem; }
+  .card-alias { font-size:.78rem; color:#888; margin-bottom:.5rem; }
+  .card-deity {
+    font-size:.84rem; color:#555; background:#f0e6c8;
+    padding:.3rem .6rem; border-radius:4px; margin-bottom:.7rem; border-left:3px solid #c9a227; line-height:1.5;
+  }
+
+  /* 顏色色條 */
+  .color-swatches { display:flex; gap:.4rem; margin-bottom:.7rem; flex-wrap:wrap; }
+  .swatch { display:flex; align-items:center; gap:.3rem; font-size:.76rem; color:#555; }
+  .swatch-dot { width:13px; height:13px; border-radius:50%; border:1px solid rgba(0,0,0,.2); flex-shrink:0; }
+
+  /* 法器 tag */
+  .tool-tag {
+    display:inline-block; background:#e8f4f8; color:#1a5276;
+    border:1px solid #aed6f1; border-radius:4px;
+    font-size:.72rem; padding:.15rem .45rem; margin:.15rem .15rem 0 0;
+  }
+  .tool-row { margin-bottom:.7rem; }
+
+  /* 特徵 */
+  .features-title { font-size:.78rem; font-weight:bold; color:#8B0000; margin-bottom:.25rem; }
+  .features-list { list-style:none; margin-bottom:.7rem; }
+  .features-list li { font-size:.8rem; color:#444; padding:.12rem 0 .12rem 1rem; position:relative; line-height:1.5; }
+  .features-list li::before { content:'▸'; position:absolute; left:0; color:#c9a227; }
+
+  /* 注意事項 */
+  .notes { font-size:.78rem; color:#8B0000; background:#fff0f0; padding:.4rem .6rem; border-radius:4px; border-left:3px solid #c0392b; line-height:1.5; }
+  .notes::before { content:'⚠ '; }
+
+  /* 趣知識 */
+  .trivia { font-size:.78rem; color:#1a5276; background:#eaf4fb; padding:.4rem .6rem; border-radius:4px; border-left:3px solid #5dade2; margin-top:.5rem; line-height:1.5; }
+  .trivia::before { content:'💡 '; }
+
+  /* 徽章 */
+  .badge { display:inline-block; font-size:.68rem; padding:.18rem .45rem; border-radius:10px; margin-bottom:.4rem; font-weight:bold; letter-spacing:.05rem; }
+  .badge-bajia { background:#c0392b; color:#fff; }
+  .badge-guanjiang { background:#16537e; color:#fff; }
+  .badge-santaizi { background:#8e44ad; color:#fff; }
+  .badge-santaizi-e { background:#7d3c98; color:#ffecff; border:1px solid #c39bd3; }
+  .badge-other { background:#27ae60; color:#fff; }
+  .badge-shiyizhang { background:#5d4037; color:#fff; }
+
+  /* ── 資訊框 ── */
+  .info-box {
+    border-radius:12px; padding:1.4rem 1.5rem; margin-bottom:2.5rem;
+  }
+  .info-box h3 { font-size:1.05rem; letter-spacing:.15rem; margin-bottom:1rem; }
+  .info-box ul { list-style:none; }
+  .info-box li { padding:.28rem 0 .28rem 1.5rem; position:relative; font-size:.87rem; line-height:1.6; }
+
+  /* 禁忌 */
+  .taboo-box { background:#2d1515; border:1px solid #8B0000; color:#ffcccc; }
+  .taboo-box h3 { color:#ffd700; }
+  .taboo-box li::before { content:'🚫 '; position:absolute; left:0; }
+
+  /* 畫法步驟 */
+  .steps-box { background:#1a2a1a; border:1px solid #27ae60; color:#ccffcc; }
+  .steps-box h3 { color:#ffd700; }
+  .step { display:flex; gap:.8rem; margin-bottom:.7rem; align-items:flex-start; }
+  .step-num { background:#c9a227; color:#1a1a2e; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:.8rem; flex-shrink:0; margin-top:.1rem; }
+  .step p { font-size:.85rem; line-height:1.6; }
+
+  /* ── 南北差異表 ── */
+  .region-section { margin-bottom:3rem; }
+  .region-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  @media(max-width:600px) { .region-grid { grid-template-columns:1fr; } }
+  .region-card { border-radius:10px; padding:1.2rem; }
+  .region-card.north { background:#1a2533; border:1px solid #3498db; color:#d6eaf8; }
+  .region-card.south { background:#2a1a0e; border:1px solid #e67e22; color:#fde8d8; }
+  .region-card h4 { font-size:1rem; margin-bottom:.8rem; letter-spacing:.1rem; }
+  .region-card.north h4 { color:#5dade2; }
+  .region-card.south h4 { color:#f0a500; }
+  .region-card li { font-size:.82rem; margin:.25rem 0 .25rem 1rem; line-height:1.6; }
+  .region-compare-title { color:#ffd700; font-size:1.3rem; border-left:5px solid #c9a227; padding-left:.8rem; margin-bottom:1rem; letter-spacing:.2rem; }
+
+  /* ── 三太子比較 ── */
+  .taizi-compare { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem; }
+  @media(max-width:550px) { .taizi-compare { grid-template-columns:1fr; } }
+  .taizi-card { background:#fdf6e3; border-radius:10px; overflow:hidden; box-shadow:0 3px 12px rgba(0,0,0,.3); }
+  .taizi-head { height:60px; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:bold; }
+  .taizi-body { padding:.8rem; font-size:.82rem; color:#444; }
+  .taizi-body h5 { color:#8B0000; margin-bottom:.4rem; font-size:.85rem; }
+  .taizi-body li { margin:.2rem 0 .2rem 1rem; line-height:1.5; }
+
+  footer { text-align:center; padding:1.5rem; color:#666; font-size:.78rem; border-top:1px solid #333; }
+  @media(max-width:480px) { .cards-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>台灣廟會臉譜大全</h1>
+  <p>八家將・官將首・三太子・廟會人物 ─ 顏色寓意・畫法特徵・南北差異・注意事項</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" onclick="filterCat('all',this)">全部</button>
+  <button class="tab-btn" onclick="filterCat('八家將-外班',this)">八家將・外班</button>
+  <button class="tab-btn" onclick="filterCat('八家將-內班',this)">八家將・內班</button>
+  <button class="tab-btn" onclick="filterCat('八家將-職官',this)">八家將・職官</button>
+  <button class="tab-btn" onclick="filterCat('官將首',this)">官將首</button>
+  <button class="tab-btn" onclick="filterCat('三太子',this)">三太子</button>
+  <button class="tab-btn" onclick="filterCat('其他',this)">其他神明</button>
+  <button class="tab-btn" onclick="filterCat('南北差異',this)">南北差異</button>
+</nav>
+
+<main>
+
+<!-- ═══ 真實照片 Gallery ═══ -->
+<div class="category-section" data-cat="all">
+  <p class="gallery-title">📷 廟會臉譜實拍（Wikimedia Commons CC授權）</p>
+  <div class="photo-gallery">
+    <figure>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/%E5%85%AB%E5%AE%B6%E5%B0%87.jpg/500px-%E5%85%AB%E5%AE%B6%E5%B0%87.jpg" alt="八家將" loading="lazy">
+      <figcaption>八家將出陣</figcaption>
+    </figure>
+    <figure>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Ba_Jia_Jiang_at_a_parade.jpg/330px-Ba_Jia_Jiang_at_a_parade.jpg" alt="八家將遊行" loading="lazy">
+      <figcaption>八家將遊行</figcaption>
+    </figure>
+    <figure>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Ba_Jia_Jiang_Taichung_02.jpg/330px-Ba_Jia_Jiang_Taichung_02.jpg" alt="八家將台中" loading="lazy">
+      <figcaption>八家將（台中）</figcaption>
+    </figure>
+    <figure>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Ba_Jia_Jiang_Taichung_01.jpg/330px-Ba_Jia_Jiang_Taichung_01.jpg" alt="八家將台中臉譜" loading="lazy">
+      <figcaption>八家將臉譜近照</figcaption>
+    </figure>
+    <figure>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/%E5%AE%98%E5%B0%87%E9%A6%96%E5%9C%A8%E5%AE%9C%E8%98%AD2017.jpg/330px-%E5%AE%98%E5%B0%87%E9%A6%96%E5%9C%A8%E5%AE%9C%E8%98%AD2017.jpg" alt="官將首宜蘭" loading="lazy">
+      <figcaption>官將首（宜蘭2017）</figcaption>
+    </figure>
+    <figure>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/%E6%B5%AA%E6%BC%AB%E5%8F%B0%E4%B8%89%E7%B7%9A-%E5%8F%B0%E7%81%A3%E5%8F%B0%E4%B8%AD%E6%9D%B1%E5%8B%A2-%E5%A4%A7%E8%8C%85%E5%9F%94-%E9%BE%8D%E7%A5%9E%E5%B1%B1%E6%B0%B4%E7%A5%AD-%E6%98%A5%E5%A4%8F%E7%A7%8B%E5%86%AC%E8%87%89%E8%AD%9C%E5%BD%A9%E7%B9%AA%E6%B4%BB%E5%8B%95-06.jpg/330px-%E6%B5%AA%E6%BC%AB%E5%8F%B0%E4%B8%89%E7%B7%9A-%E5%8F%B0%E7%81%A3%E5%8F%B0%E4%B8%AD%E6%9D%B1%E5%8B%A2-%E5%A4%A7%E8%8C%85%E5%9F%94-%E9%BE%8D%E7%A5%9E%E5%B1%B1%E6%B0%B4%E7%A5%AD-%E6%98%A5%E5%A4%8F%E7%A7%8B%E5%86%AC%E8%87%89%E8%AD%9C%E5%BD%A9%E7%B9%AA%E6%B4%BB%E5%8B%95-06.jpg" alt="臉譜彩繪活動" loading="lazy">
+      <figcaption>四季神臉譜彩繪活動（台中東勢）</figcaption>
+    </figure>
+    <figure>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/%E6%B5%AA%E6%BC%AB%E5%8F%B0%E4%B8%89%E7%B7%9A-%E5%8F%B0%E7%81%A3%E5%8F%B0%E4%B8%AD%E6%9D%B1%E5%8B%A2-%E5%A4%A7%E8%8C%85%E5%9F%94-%E9%BE%8D%E7%A5%9E%E5%B1%B1%E6%B0%B4%E7%A5%AD-%E6%98%A5%E5%A4%8F%E7%A7%8B%E5%86%AC%E8%87%89%E8%AD%9C%E5%BD%A9%E7%B9%AA%E6%B4%BB%E5%8B%95-04.jpg/330px-%E6%B5%AA%E6%BC%AB%E5%8F%B0%E4%B8%89%E7%B7%9A-%E5%8F%B0%E7%81%A3%E5%8F%B0%E4%B8%AD%E6%9D%B1%E5%8B%A2-%E5%A4%A7%E8%8C%85%E5%9F%94-%E9%BE%8D%E7%A5%9E%E5%B1%B1%E6%B0%B4%E7%A5%AD-%E6%98%A5%E5%A4%8F%E7%A7%8B%E5%86%AC%E8%87%89%E8%AD%9C%E5%BD%A9%E7%B9%AA%E6%B4%BB%E5%8B%95-04.jpg" alt="彩繪活動04" loading="lazy">
+      <figcaption>臉譜彩繪（台中東勢）</figcaption>
+    </figure>
+    <figure>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Fire_breathing_performance_in_a_Ba-Jia-Jiang_%28the_Eight_Infernal_Generals%29_parade_in_Chiayi_City_%28Taiwan%29.jpg/330px-Fire_breathing_performance_in_a_Ba-Jia-Jiang_%28the_Eight_Infernal_Generals%29_parade_in_Chiayi_City_%28Taiwan%29.jpg" alt="嘉義八家將噴火" loading="lazy">
+      <figcaption>八家將噴火表演（嘉義）</figcaption>
+    </figure>
+  </div>
+</div>
+
+<!-- ═══ 畫法步驟 ═══ -->
+<div class="info-box steps-box category-section" data-cat="all">
+  <h3>🖌 臉譜彩繪基本步驟</h3>
+  <div class="step"><div class="step-num">1</div><p><strong>清潔打底</strong>：齋戒沐浴後，以油膏均勻塗抹全臉，建立乾淨底層。</p></div>
+  <div class="step"><div class="step-num">2</div><p><strong>白色勾稿</strong>：以白色化妝油膏描繪圖騰輪廓、眼眶、嘴型等線條，確認構圖。</p></div>
+  <div class="step"><div class="step-num">3</div><p><strong>填入底色</strong>：依角色屬性填入主色，大面積用海綿拍打，邊緣用細筆處理。</p></div>
+  <div class="step"><div class="step-num">4</div><p><strong>描繪圖騰</strong>：畫上額頭圖騰（蝙蝠、半月、太極、火焰、龍紋等），強調眼眶・法令紋・魚尾紋，做戲曲式誇張處理。</p></div>
+  <div class="step"><div class="step-num">5</div><p><strong>三點金</strong>（官將首必備）：額頭・鼻頭・下巴點金，象徵天時地利人和。</p></div>
+  <div class="step"><div class="step-num">6</div><p><strong>開臉稟告</strong>：完成後行禮稟告神明，正式完成「開臉」儀式。</p></div>
+  <div class="step"><div class="step-num">7</div><p><strong>定妝</strong>：撲散粉固定，避免出汗脫妝，做最後修飾。</p></div>
+</div>
+
+<!-- ═══ 禁忌 ═══ -->
+<div class="info-box taboo-box category-section" data-cat="all">
+  <h3>🚫 通用禁忌與規矩</h3>
+  <ul>
+    <li>畫臉前必須齋戒沐浴，保持身心清潔。</li>
+    <li>非出陣期間不得隨意開臉，臉譜具神聖性不得褻瀆。</li>
+    <li>部分廟會規定：女性生理期間不得開臉或參與出陣。</li>
+    <li>出陣期間不得飲酒、言行輕浮，需保持神將威嚴。</li>
+    <li>謝范二將（七爺、八爺）相傳不可同時入廟，需在廟外一人守候。</li>
+    <li>卸妝（謝臉）需向神明稟告，不可草率了事。</li>
+    <li>各廟臉譜傳承不同，學習需拜師，不可私自更改圖騰配置。</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════
+     八家將・外班
+═══════════════════════════ -->
+<div class="category-section" data-cat="八家將-外班">
+  <h2 class="category-title">八家將・外班四將</h2>
+  <p class="category-desc">負責捉拿惡鬼、執行刑罰，是廟會出陣最具代表性的神將。臉譜最為繁複鮮明，動作俐落、陣型嚴整。</p>
+  <div class="cards-grid">
+
+    <!-- 甘將軍 -->
+    <div class="card">
+      <div style="position:relative">
+        <img class="card-photo" style="object-position:center 30%;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Ba_Jia_Jiang_Taichung_01.jpg/330px-Ba_Jia_Jiang_Taichung_01.jpg" alt="八家將臉譜（台中）" loading="lazy">
+        <span style="position:absolute;bottom:4px;right:8px;font-size:.62rem;color:rgba(255,255,255,.85);background:rgba(0,0,0,.5);padding:1px 4px;border-radius:3px">紅黑陰陽臉</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-bajia">八家將・外班</span>
+        <div class="card-name">甘將軍</div><div class="card-alias">甘爺・與柳爺對稱</div>
+        <div class="card-deity">職司：執板刑罰、拷問鬼魂，陰陽臉代表「陰陽分明、善惡昭彰」</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#c0392b"></span>紅（左半）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#1a1a1a"></span>黑（右半）</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">⚒ 戒棍（執板）</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>鼻梁正中線分界，左紅右黑（各廟或有左右互換）</li>
+          <li>額頭繪「目字紋」或「太極紋」或「火焰紋」</li>
+          <li>色塊必須對稱，分界線清晰筆直</li>
+        </ul>
+        <div class="notes">左右顏色務必對稱；與柳爺成對，動作亦需協調一致</div>
+        <div class="trivia">由外表威嚴、動作俐落的資深隊員擔任</div>
+      </div>
+    </div>
+
+    <!-- 柳將軍 -->
+    <div class="card">
+      <div style="position:relative">
+        <img class="card-photo" style="object-position:center 30%;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Ba_Jia_Jiang_Taichung_02.jpg/330px-Ba_Jia_Jiang_Taichung_02.jpg" alt="八家將臉譜（台中）" loading="lazy">
+        <span style="position:absolute;bottom:4px;right:8px;font-size:.62rem;color:rgba(255,255,255,.85);background:rgba(0,0,0,.5);padding:1px 4px;border-radius:3px">黑白陰陽臉</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-bajia">八家將・外班</span>
+        <div class="card-name">柳將軍</div><div class="card-alias">柳爺・與甘爺對稱</div>
+        <div class="card-deity">職司：協同甘爺執板刑罰，以詭異斜眼歪嘴給鬼魂精神壓力</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#1a1a1a"></span>黑（左半）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#ecf0f1;border:1px solid #999"></span>白（右半）</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">⚒ 戒棍（執板）</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>黑白陰陽臉，與甘爺紅黑形成對比</li>
+          <li>額頭繪「章魚足紋」，嘴角法令紋做倒勾曲線</li>
+          <li>刻意不對稱：大小眼、歪嘴，給人詭異感</li>
+        </ul>
+        <div class="notes">不對稱是設計刻意，切勿修正；各廟規格差異大，需向師傅確認</div>
+        <div class="trivia">動作刁鑽靈活，在前線給鬼魂施壓，是陣頭中最「詭」的角色</div>
+      </div>
+    </div>
+
+    <!-- 謝將軍 七爺 -->
+    <div class="card">
+      <div style="position:relative">
+        <img class="card-photo" style="object-position:center 15%;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/%E6%96%B0%E7%AB%B9%E5%BB%9F%E5%8F%A3%E4%B8%83%E7%88%BA.jpg/250px-%E6%96%B0%E7%AB%B9%E5%BB%9F%E5%8F%A3%E4%B8%83%E7%88%BA.jpg" alt="新竹廟口七爺" loading="lazy">
+        <span style="position:absolute;bottom:4px;right:8px;font-size:.62rem;color:rgba(255,255,255,.85);background:rgba(0,0,0,.5);padding:1px 4px;border-radius:3px">白底蝙蝠面・新竹廟口</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-bajia">八家將・外班</span>
+        <div class="card-name">謝將軍</div><div class="card-alias">大爺・七爺・謝爺（身形高聳）</div>
+        <div class="card-deity">職司：引魂、緝拿，等候友人誤時而溺斃，受封神將</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#fff;border:1px solid #999"></span>白（底）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#1a1a1a"></span>黑（線條）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c9a227"></span>金</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">🪭 羽扇</span><span class="tool-tag">🐟 魚枷</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>白底為主，額頭必繪「蝙蝠」（蝠＝福，象徵賜福）</li>
+          <li>帽子書「一見大吉」，舌頭吐出（象徵溺斃缺氧）</li>
+          <li>羽扇遮面，兼具遮陽氣、指揮兵將功能</li>
+        </ul>
+        <div class="notes">七爺八爺不可同時入廟，出陣須一人在廟外候等</div>
+        <div class="trivia">身形極高，通常由最高的隊員擔任，帽子更加高聳</div>
+      </div>
+    </div>
+
+    <!-- 范將軍 八爺 -->
+    <div class="card">
+      <div style="position:relative">
+        <img class="card-photo" style="object-position:center 15%;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/%E6%96%B0%E7%AB%B9%E5%BB%9F%E5%8F%A3%E5%85%AB%E7%88%BA.jpg/250px-%E6%96%B0%E7%AB%B9%E5%BB%9F%E5%8F%A3%E5%85%AB%E7%88%BA.jpg" alt="新竹廟口八爺" loading="lazy">
+        <span style="position:absolute;bottom:4px;right:8px;font-size:.62rem;color:rgba(255,255,255,.85);background:rgba(0,0,0,.5);padding:1px 4px;border-radius:3px">黑底潑猴面・新竹廟口</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-bajia">八家將・外班</span>
+        <div class="card-name">范將軍</div><div class="card-alias">二爺・八爺・范爺（身形矮胖）</div>
+        <div class="card-deity">職司：緝拿扣押，民間傳說為靈猴精轉世，以黑色彰顯剛烈無私</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#1a1a1a"></span>黑（底）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c9a227"></span>金（圖騰）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c0392b"></span>紅（火焰）</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">🪭 羽扇</span><span class="tool-tag">📋 方牌</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>黑底，兩頰繪「金錢・圓圈」圖騰（潑猴意象）</li>
+          <li>嘴部必繪「火焰圖騰（火焰嘴）」</li>
+          <li>額頭繪「方形大印」或「火字」，象徵陰差執法</li>
+        </ul>
+        <div class="notes">七爺八爺不可同時入廟；方牌書「賞善罰惡」或「速報」</div>
+        <div class="trivia">身形矮胖，通常由最矮的隊員擔任，與七爺形成強烈對比</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     八家將・內班
+═══════════════════════════ -->
+<div class="category-section" data-cat="八家將-內班">
+  <h2 class="category-title">八家將・內班四季神</h2>
+  <p class="category-desc">負責審問盤查鬼魂，依五行方位各司其職。臉譜以動植物圖騰為特色，服裝顏色對應五行屬性。</p>
+  <div class="cards-grid">
+
+    <!-- 春大神 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#1abc9c,#148f77);">
+        <span style="color:#fff;text-shadow:1px 1px 3px #000">春</span>
+        <span class="face-label">青色・東方龍面</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-bajia">八家將・內班</span>
+        <div class="card-name">春大神</div><div class="card-alias">顯道將軍・東方木神</div>
+        <div class="card-deity">職司：審問鬼魂，潑靈水醒靈，掌東方・木性・春季</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#1abc9c"></span>青/綠（主）</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">🪣 木桶（靈水）</span><span class="tool-tag">🪭 羽扇</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>青綠色底，額頭繪「東方龍」或「竹葉紋」</li>
+          <li>整體青袍配青臉，象徵木性春生</li>
+          <li>木桶內靈水象徵春雨醒靈、初審</li>
+        </ul>
+        <div class="notes">東方屬木，切勿混入西方金色系</div>
+      </div>
+    </div>
+
+    <!-- 夏大神 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#e74c3c,#a93226);">
+        <span style="color:#fff;text-shadow:1px 1px 3px #000">夏</span>
+        <span class="face-label">紅色・南方鳳凰面</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-bajia">八家將・內班</span>
+        <div class="card-name">夏大神</div><div class="card-alias">黃道將軍・南方火神</div>
+        <div class="card-deity">職司：以火盆烙燙罪鬼，掌南方・火性・夏季</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#e74c3c"></span>紅（主）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#f39c12"></span>橙紅</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">🔥 火盆</span><span class="tool-tag">🪭 羽扇</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>紅色底，額頭繪「南方朱鳥/鳳凰」或蓮花紋</li>
+          <li>整體紅袍配紅臉，火盆有驅邪除穢視覺效果</li>
+          <li>面型圓潤，象徵夏日熱烈</li>
+        </ul>
+        <div class="notes">南方屬火，切勿混入北方水（黑/藍）元素</div>
+      </div>
+    </div>
+
+    <!-- 秋大神 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#ecf0f1,#bdc3c7);">
+        <span style="color:#333;text-shadow:none;font-size:1.6rem">秋</span>
+        <span class="face-label" style="color:#555">白色・西方虎面</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-bajia">八家將・內班</span>
+        <div class="card-name">秋大神</div><div class="card-alias">文道將軍・西方金神</div>
+        <div class="card-deity">職司：以金瓜錘擊打罪鬼，掌西方・金性・秋季</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#ecf0f1;border:1px solid #999"></span>白（主）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c9a227"></span>金</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">🔨 金瓜錘/銅棍</span><span class="tool-tag">🪭 羽扇</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>白色底（非黃），額頭繪「西方白虎」或鳥羽翼紋</li>
+          <li>整體白袍，象徵秋天的肅殺金氣</li>
+          <li>金瓜錘代表實體懲罰，秋收後的嚴肅意象</li>
+        </ul>
+        <div class="notes">秋神為白底非黃底，勿與黃色系混淆</div>
+      </div>
+    </div>
+
+    <!-- 冬大神 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#2c3e50,#1a252f);">
+        <span style="color:#7fb3d3;text-shadow:1px 1px 3px #000">冬</span>
+        <span class="face-label" style="color:#777">黑藍色・玄武面</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-bajia">八家將・內班</span>
+        <div class="card-name">冬大神</div><div class="card-alias">武道將軍・北方水神</div>
+        <div class="card-deity">職司：以毒蛇威嚇罪鬼，掌北方・水性・冬季</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#1a1a1a"></span>黑（主）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#1a5276"></span>深藍</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">🐍 毒蛇/蛇形鞭</span><span class="tool-tag">🪭 羽扇</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>黑/深藍底，額頭繪「玄武蛇龜紋」</li>
+          <li>整體黑袍，象徵冬藏陰冷地底之力</li>
+          <li>需以金/白色描邊確保辨識度</li>
+        </ul>
+        <div class="notes">黑袍黑臉易混淆，描邊色對比需足夠明顯</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     八家將・職官
+═══════════════════════════ -->
+<div class="category-section" data-cat="八家將-職官">
+  <h2 class="category-title">八家將・職官人員</h2>
+  <p class="category-desc">完整十三人編制中的職官角色，負責傳令、判刑、押解。其中什役（刑具爺）為全陣的場上指揮者。</p>
+  <div class="cards-grid">
+
+    <!-- 什役 刑具爺 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#4a2c0a,#6b3a1f);">
+        <span style="color:#ffd700;font-size:1.5rem;text-shadow:1px 1px 3px #000">刑具爺</span>
+        <span class="face-label" style="color:#aaa">斗笠・挑刑具</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-shiyizhang">什役・刑具爺</span>
+        <div class="card-name">什役（刑具爺）</div><div class="card-alias">畢中將・陣頭場上指揮者</div>
+        <div class="card-deity">職司：肩擔刑具法器、勘查前行路況、掌控陣法節奏，為全陣的實際指揮者</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#e74c3c"></span>紅褲/紅肚兜</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#8B6914"></span>斗笠色</span>
+        </div>
+        <div class="tool-row">
+          <span class="tool-tag">⚖ 魚枷</span><span class="tool-tag">⛓ 手銬・腳鐐</span>
+          <span class="tool-tag">🔪 藤條・板杖</span><span class="tool-tag">最多36項刑具</span>
+        </div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>多數什役<strong>不開臉（不畫臉譜）</strong>，著便服或紅肚兜</li>
+          <li>有開臉者，臉譜為「鬼王臉」（獠牙突出）</li>
+          <li>頭戴斗笠，下著紅褲，上半身有時打赤膊</li>
+        </ul>
+        <div class="notes">刑具擔重達二、三十斤，通常由資深成員擔任；碰撞刑具出聲控制全陣節奏</div>
+        <div class="trivia">刑具可多達三十六項，象徵地獄十八層刑具的完整體現</div>
+      </div>
+    </div>
+
+    <!-- 文判官 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#f5cba7,#d4ac0d20);">
+        <span style="color:#8B0000;font-size:1.7rem">文判</span>
+        <span class="face-label" style="color:#555">粉面・文雅官員</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-bajia">八家將・職官</span>
+        <div class="card-name">文判官</div><div class="card-alias">掌書判官・記錄官</div>
+        <div class="card-deity">職司：核對善惡名冊，判定罰則，不跳、不擺動，動作端莊沉穩</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#f5cba7"></span>粉白（底）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c0392b"></span>紅（描邊）</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">📖 生死簿</span><span class="tool-tag">✏️ 毛筆</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>粉白底（或淡紅），額頭繪「壽字」或「太極」或「文官眉」</li>
+          <li>著官服，右手毛筆、左手生死簿，氣質儒雅</li>
+          <li>面容端莊，眉型平直，不可過於威猛</li>
+        </ul>
+        <div class="notes">文判需與武判形成文武對比；走步時端莊沉穩，眼神銳利</div>
+      </div>
+    </div>
+
+    <!-- 武判官 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#1a5276,#154360);">
+        <span style="color:#fff;font-size:1.7rem;text-shadow:1px 1px 3px #000">武判</span>
+        <span class="face-label">藍臉・凶惡押解</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-bajia">八家將・職官</span>
+        <div class="card-name">武判官</div><div class="card-alias">執法判官・押解官</div>
+        <div class="card-deity">職司：押解亡魂，遇反抗者當場擊斃，臉譜極度兇惡</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#1a5276"></span>藍（底）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c9a227"></span>金</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">⚔️ 鐧（九節鞭）</span><span class="tool-tag">🧱 九層金磚</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>藍底（或惡形紅臉），額頭繪「怒紋」或「火焰紋」或「豹紋」</li>
+          <li>著武官服，表情極度兇惡，眉頭緊鎖</li>
+          <li>面容與文判形成強烈對比</li>
+        </ul>
+        <div class="notes">武判凶惡程度象徵對頑劣靈體絕不留情，不可畫得過於溫和</div>
+      </div>
+    </div>
+
+    <!-- 文差 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#ecf0f1,#d5d8dc);">
+        <span style="color:#2c3e50;font-size:1.7rem">文差</span>
+        <span class="face-label" style="color:#555">白底・清秀文使</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-bajia">八家將・職官</span>
+        <div class="card-name">文差</div><div class="card-alias">文使・傳令文官・位居左側</div>
+        <div class="card-deity">職司：傳遞命令公文，為城隍爺的文書使者</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#ecf0f1;border:1px solid #999"></span>白底</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c0392b"></span>紅綠線條</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">🚩 令旗</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>白底配紅綠線條，臉譜清秀，為將爺中最不猙獰的類型</li>
+          <li>額頭繪虎面紋或花卉紋（線條較秀氣）</li>
+          <li>位居左側，手持令旗指引陣頭前進</li>
+        </ul>
+        <div class="notes">文差武差需成對，文差偏柔、武差偏剛，形成視覺對比</div>
+      </div>
+    </div>
+
+    <!-- 武差 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#1a5276,#154360);">
+        <span style="color:#fff;font-size:1.7rem;text-shadow:1px 1px 3px #000">武差</span>
+        <span class="face-label">藍底・陽剛武使</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-bajia">八家將・職官</span>
+        <div class="card-name">武差</div><div class="card-alias">武使・傳令武官・位居右側</div>
+        <div class="card-deity">職司：武力護送、傳遞軍令，為城隍爺的武裝使者</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#1a5276"></span>藍底</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c0392b"></span>紅黑線條</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">🪙 令牌</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>藍底配紅黑線條，臉譜線條較陽剛剛猛</li>
+          <li>額頭繪「戰甲紋」或「火焰紋」</li>
+          <li>位居右側，手持令牌代表武裝執行</li>
+        </ul>
+        <div class="notes">武差動作較大，手執令牌時姿態更具戰鬥感</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     官將首
+═══════════════════════════ -->
+<div class="category-section" data-cat="官將首">
+  <h2 class="category-title">官將首</h2>
+  <p class="category-desc">發源於新北市新莊地藏庵（1742年），由人扮演地藏王菩薩護法。三色分明、「三點金」為最大特色，氣勢磅礴、眼神逼人，流行於北台灣。</p>
+  <div class="cards-grid">
+
+    <!-- 損將軍 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#1e8449,#145a32);">
+        <span style="color:#fff;text-shadow:1px 1px 3px #000">損將軍</span>
+        <span class="face-label">青綠・三叉眉</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-guanjiang">官將首</span>
+        <div class="card-name">損將軍</div><div class="card-alias">正座居中・青面將軍</div>
+        <div class="card-deity">職司：遇惡人則縮短其壽命（損其陽壽），主控全場陣形</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#1e8449"></span>青綠（底）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c9a227"></span>金（三點金）</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">🔱 三叉戟</span><span class="tool-tag">🔥 火籤</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>青綠底，全臉布滿「火焰爆筋紋」，獠牙突出</li>
+          <li>必有「三叉眉」（三叉形狀的眉毛設計）</li>
+          <li>「三點金」：額頭・鼻頭・下巴三處點金（天時地利人和）</li>
+        </ul>
+        <div class="notes">三點金三處比例須均衡；不同廟口三叉符號形狀各有傳承</div>
+        <div class="trivia">相傳損將軍若逢惡人會吸取其惡氣，綠面代表威嚴執法</div>
+      </div>
+    </div>
+
+    <!-- 增將軍 紅 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#c0392b,#7b241c);">
+        <span style="color:#fff;text-shadow:1px 1px 3px #000">增將軍</span>
+        <span class="face-label">紅面・左翼護衛</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-guanjiang">官將首</span>
+        <div class="card-name">增將軍（紅面）</div><div class="card-alias">左偏座・義憤紅面</div>
+        <div class="card-deity">職司：遇善人則增加其壽命，防禦損將軍左翼，見惡義憤填膺</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#c0392b"></span>紅（底）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c9a227"></span>金（三點金）</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">🐯 虎牌</span><span class="tool-tag">⛓ 手銬</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>紅底，對稱火紅三叉紋，爆筋紋，獠牙突出</li>
+          <li>「三點金」同樣為額頭・鼻頭・下巴</li>
+          <li>持虎牌象徵威嚇，手銬象徵拘提</li>
+        </ul>
+        <div class="notes">部分廟口增將軍為藍面，是否紅或藍需依廟口傳承</div>
+      </div>
+    </div>
+
+    <!-- 增將軍 藍 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#1a5276,#154360);">
+        <span style="color:#fff;text-shadow:1px 1px 3px #000">增將軍</span>
+        <span class="face-label">藍面・右翼護衛</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-guanjiang">官將首</span>
+        <div class="card-name">增將軍（藍面）</div><div class="card-alias">右偏座・部分廟口版本</div>
+        <div class="card-deity">職司：防禦損將軍右翼，持火籤拘提罪惡；原本只有一增一損，後演變為三人陣</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#1a5276"></span>藍（底）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c9a227"></span>金（三點金）</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">🔥 火籤</span><span class="tool-tag">⛓ 鐵鍊</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>深藍底，對稱三叉紋，同有三點金與獠牙</li>
+          <li>持火籤（區別於紅面的虎牌）</li>
+          <li>額頭圖騰依廟口傳承，通常為符咒或虎頭</li>
+        </ul>
+        <div class="trivia">官將首原本為一增一損兩人陣，為陣法對稱美感後演變為三人</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     三太子
+═══════════════════════════ -->
+<div class="category-section" data-cat="三太子">
+  <h2 class="category-title">三太子・哪吒</h2>
+  <p class="category-desc">哪吒為中壇元帥，童神形象象徵年輕活力。廟會中有「傳統三太子」與「電音三太子」兩種版本，各有不同臉譜風格。</p>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#8B0000,#c0392b);">
+        <span style="color:#ffd700;font-size:1.5rem;text-shadow:1px 1px 3px #000">哪吒・傳統</span>
+        <span class="face-label">紅底童顏面</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-santaizi">三太子・傳統</span>
+        <div class="card-name">哪吒三太子（傳統）</div><div class="card-alias">中壇元帥・李哪吒</div>
+        <div class="card-deity">職司：鎮守中界、降魔衛道，神通廣大的童神</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#c0392b"></span>紅（主）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c9a227"></span>金</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#f5cba7"></span>膚色底</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">🔱 火尖槍</span><span class="tool-tag">⭕ 乾坤圈</span><span class="tool-tag">🌪 風火輪</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>童顏彩繪，面容可愛，眼眶紅色描邊</li>
+          <li>額頭可繪火焰或如意紋，整體莊嚴帶童趣</li>
+          <li>配傳統鑼鼓，動作莊重</li>
+        </ul>
+        <div class="notes">傳統三太子需依廟口規範，妝容不可過度商業化</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#6c3483,#9b59b6);">
+        <span style="color:#ffe0ff;font-size:1.5rem;text-shadow:1px 1px 3px #000">哪吒・電音</span>
+        <span class="face-label">誇張戲劇妝容</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-santaizi-e">三太子・電音</span>
+        <div class="card-name">哪吒三太子（電音版）</div><div class="card-alias">電音三太子・現代演繹</div>
+        <div class="card-deity">2006年正式命名，傳統民俗結合電子音樂，深受年輕族群喜愛，曾登上國際舞台</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#e91e63"></span>桃紅</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c9a227"></span>金</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#9c27b0"></span>紫</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">🎵 電子音樂</span><span class="tool-tag">🎭 大頭娃娃造型</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>誇張戲劇化妝容，色彩飽和鮮豔</li>
+          <li>濃眉大眼上揚，深酒窩，呈現活力青春感</li>
+          <li>各團有創意發揮空間，無固定制式</li>
+        </ul>
+        <div class="notes">電音版為現代創意表現，屬民俗藝術而非純宗教科儀</div>
+        <div class="trivia">源自福州大頭娃娃「孩兒弟」，傳入台灣後融合電音文化大放異彩</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     其他神明
+═══════════════════════════ -->
+<div class="category-section" data-cat="其他">
+  <h2 class="category-title">其他廟會神明</h2>
+  <p class="category-desc">台灣廟會中常見的其他神明形象，各有獨特臉譜傳統。</p>
+  <div class="cards-grid">
+
+    <!-- 鍾馗 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#1a1a1a,#2c3e50);">
+        <span style="color:#c0392b;font-size:1.8rem;text-shadow:1px 1px 5px #000">鍾馗</span>
+        <span class="face-label" style="color:#777">黑底濃鬚面</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-other">驅魔神明</span>
+        <div class="card-name">鍾馗</div><div class="card-alias">賜福鎮宅鍾馗・驅魔大神</div>
+        <div class="card-deity">職司：驅邪除鬼、鎮宅保平安，唐代進士受封，「跳鍾馗」為儀式性活動</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#1a1a1a"></span>黑（底）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#c0392b"></span>紅（眼眶）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#5d4037"></span>棕（鬍鬚）</span>
+        </div>
+        <div class="tool-row"><span class="tool-tag">⚔️ 劍</span></div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>滿臉濃鬚為最大特色，需用細筆一根根描繪</li>
+          <li>眼神兇猛，眼眶紅色描邊，表情嚴肅威武</li>
+          <li>持劍，穿官服，鬍鬚是靈魂所在不可省略</li>
+        </ul>
+        <div class="notes">廟會「跳鍾馗」為儀式性活動，需有師傅帶領</div>
+      </div>
+    </div>
+
+    <!-- 城隍爺 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#c9a227,#7d6608);">
+        <span style="color:#fff;font-size:1.4rem;text-shadow:1px 1px 3px #000">城隍爺</span>
+        <span class="face-label">金底官面</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-other">冥界行政</span>
+        <div class="card-name">城隍爺</div><div class="card-alias">城隍・境主公</div>
+        <div class="card-deity">職司：主掌地方陰陽事務，八家將即為其護衛神將</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#c9a227"></span>金（主）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#8B0000"></span>深紅</span>
+        </div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>面容端莊威嚴，著官帽官服，不誇張變形</li>
+          <li>金色或白底為主，體現神明高貴地位</li>
+        </ul>
+        <div class="notes">城隍爺面容不可過度誇張，需維持神明莊嚴形象</div>
+      </div>
+    </div>
+
+    <!-- 虎爺 -->
+    <div class="card">
+      <div class="card-face" style="background:linear-gradient(135deg,#f39c12,#d68910);">
+        <span style="color:#1a1a1a;font-size:1.8rem;font-weight:bold">虎爺</span>
+        <span class="face-label" style="color:#333">橙黃虎紋・王字額頭</span>
+      </div>
+      <div class="card-body">
+        <span class="badge badge-other">護法神獸</span>
+        <div class="card-name">虎爺</div><div class="card-alias">虎將軍・黑虎將軍</div>
+        <div class="card-deity">職司：護法、咬錢招財，原為山神/土地公/城隍爺座騎，因護主有功受封</div>
+        <div class="color-swatches">
+          <span class="swatch"><span class="swatch-dot" style="background:#f39c12"></span>橙黃（底）</span>
+          <span class="swatch"><span class="swatch-dot" style="background:#1a1a1a"></span>黑（虎紋）</span>
+        </div>
+        <p class="features-title">畫法重點</p>
+        <ul class="features-list">
+          <li>橙黃底配黑色虎紋，額頭「王」字為標誌</li>
+          <li>虎牙突出、嘴部張開，眼神兇猛</li>
+          <li>黑虎版：底色改黑，紋路用金/白色描繪</li>
+        </ul>
+        <div class="notes">額頭「王」字比例需精準；黑虎/金虎/黃虎依供奉神明不同而異</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     南北差異
+═══════════════════════════ -->
+<div class="category-section region-section" data-cat="南北差異">
+  <h2 class="region-compare-title">南北差異・地域傳承比較</h2>
+  <p class="category-desc" style="margin-bottom:1.2rem">台灣廟會陣頭因南北傳承不同，在臉譜風格、動作、組織上有顯著差異。官將首與八家將更是兩套截然不同的系統。</p>
+
+  <div class="region-grid">
+    <div class="region-card south">
+      <h4>🔴 南部系統（台南・嘉義）</h4>
+      <ul>
+        <li><strong>代表：</strong>台南西來庵（歷史最悠久），嘉義「吉義拱廣振」五大字派</li>
+        <li><strong>名稱：</strong>多稱「什家將」（八家將含職官共十三人完整編制）</li>
+        <li><strong>動作：</strong>較陰柔飄逸，受南部歌仔戲影響，服裝有「水袖」等戲劇元素</li>
+        <li><strong>臉譜風格：</strong>線條較細膩秀氣，色彩層次豐富，圖騰繁複精細</li>
+        <li><strong>組織：</strong>以8人為基本單位，雙雙對對、陣型多變</li>
+        <li><strong>傳承：</strong>嘉義吉字輩源頭為台南西來庵，由嘉義城隍廟匾額可考</li>
+        <li><strong>代表廟：</strong>台南西來庵（吉聖堂、吉興堂等堂號以「吉」字開頭）</li>
+      </ul>
+    </div>
+    <div class="region-card north">
+      <h4>🔵 北部系統（台北・新北・基隆）</h4>
+      <ul>
+        <li><strong>代表：</strong>台北霞海城隍廟、新北新莊地藏庵（官將首發源地）</li>
+        <li><strong>名稱：</strong>北部多稱「八家將」；新莊另發展出「官將首」系統</li>
+        <li><strong>動作：</strong>較陽剛有力，步法威武，氣勢壓迫感強</li>
+        <li><strong>臉譜風格：</strong>線條較粗獷豪邁，色塊對比鮮明，官將首特有三點金</li>
+        <li><strong>組織：</strong>官將首為三人組（損將軍+兩位增將軍），與八家將截然不同</li>
+        <li><strong>傳承：</strong>台北霞海城隍廟打臉師傅許連成「手上無譜、心中有譜」</li>
+        <li><strong>代表廟：</strong>新莊地藏庵（官將首）、基隆城隍廟（八家將）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:1.2rem; background:#1e2233; border-radius:10px; padding:1.2rem; color:#ccc; border:1px solid #c9a227;">
+    <p style="color:#ffd700; font-weight:bold; margin-bottom:.7rem; letter-spacing:.1rem">⚖️ 八家將 vs 官將首 核心差異</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:.8rem; font-size:.82rem;">
+      <div>
+        <p style="color:#c9a227; margin-bottom:.3rem">比較項目</p>
+        <ul style="list-style:none; line-height:2">
+          <li>人數</li><li>發源地</li><li>主祀神</li>
+          <li>臉譜特色</li><li>陣型</li><li>動作風格</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:#e74c3c; margin-bottom:.3rem">八家將</p>
+        <ul style="list-style:none; line-height:2">
+          <li>8～13人</li><li>台南西來庵</li><li>城隍爺・王爺</li>
+          <li>多元、各廟差異大</li><li>雙雙對對陣型</li><li>南部柔/北部剛</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:#3498db; margin-bottom:.3rem">官將首</p>
+        <ul style="list-style:none; line-height:2">
+          <li>3人（核心）</li><li>新莊地藏庵</li><li>地藏王菩薩</li>
+          <li>三點金・爆筋紋</li><li>三角形站位</li><li>威猛壓迫感</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <p>圖片來源：Wikimedia Commons（CC授權）・資料來源：台灣光華雜誌・自由時報・維基百科・國家文化記憶庫・保庇NOW・民間研究所</p>
+  <p style="margin-top:.3rem">本頁為台灣傳統廟會文化教育整理，內容依廟口傳承可能有所差異。</p>
+</footer>
+
+<script>
+  function filterCat(cat, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.category-section, .region-section').forEach(sec => {
+      if (cat === 'all') { sec.style.display = ''; return; }
+      const c = sec.dataset.cat;
+      sec.style.display = (c === cat || c === 'all') ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
